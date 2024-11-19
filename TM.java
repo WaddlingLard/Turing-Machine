@@ -24,8 +24,15 @@ public class TM {
     // constructor for Turing machine with input string 
     public TM(String input, int numStates, int numSymbols) {
         this(numStates, numSymbols);
-
+        for(int i = 0; i<input.length(); i++){
+            tape.add(input.charAt(i)-'0');
+        }
     }
+
+    public boolean isHalted(){
+        return state == numStates;
+    }
+
 
     
 
