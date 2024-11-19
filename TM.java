@@ -7,6 +7,7 @@ public class TM {
     private LinkedList<Integer> tape;
     private int head; //head's current position 
     private int state; // current state
+
     // number of states and symbols for validation
     private int numStates;
     private int numSymbols; 
