@@ -1,3 +1,5 @@
+package tm;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
@@ -94,7 +96,7 @@ public class TMSimulator {
 
         // System.out.println("There should be " + ((numStates - 1) * (numAlphabet + 1)) + " transitions.");
 
-        // Creating the TM
+        // Creating the tm.TM
 
         TM turingMachine;
 

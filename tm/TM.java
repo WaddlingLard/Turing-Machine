@@ -1,5 +1,6 @@
+package tm;
+
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class TM {
@@ -89,7 +90,7 @@ public class TM {
 
     public TMState getState(int stateIndex) {
 
-        // Iterator<TMState> iterate = Q.iterator(); 
+        // Iterator<tm.TMState> iterate = Q.iterator();
 
         int index = 0;
         for(TMState state: Q){
@@ -103,7 +104,7 @@ public class TM {
         
         // int index = 0;
         // while (iterate.hasNext()) {
-        //     TMState grabbed = iterate.next();
+        //     tm.TMState grabbed = iterate.next();
         //     if (index == stateIndex) {
         //         return grabbed;
         //     }
