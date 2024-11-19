@@ -22,8 +22,12 @@ public class TMState {
     }
 
     public String addTransition(int nextState, String direction) {
-
         return this.transitions.put(nextState, direction);
+    }
+
+    public String getTransition() {
+
+        return "";
     }
 
 }

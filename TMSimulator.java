@@ -1,7 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 import java.util.Scanner;
 
 /**
@@ -13,8 +14,9 @@ public class TMSimulator {
     
     public static void main(String[] args) {
 
-        int numStates = -1, numAlphabet = -1;
-        ArrayList<String[]> transitions = new ArrayList<String[]>();
+        int numStates = -1, numAlphabet = -1, finalState = -1;
+        // ArrayList<String[]> transitions = new ArrayList<String[]>();
+        Queue<String[]> transitions = new LinkedList<String[]>();
         String inputString = "";
         
         if (args.length != 1) {
@@ -51,6 +53,7 @@ public class TMSimulator {
             
             // Number of states
            numStates = scan.nextInt();
+           finalState = numStates - 1;
            numAlphabet = scan.nextInt();
 
             // Grabbing Transitions
@@ -80,29 +83,48 @@ public class TMSimulator {
             System.err.println("File Not Found!");
         } catch (NoSuchElementException e) {
             System.err.println("File missing data!");
-            e.printStackTrace();
+            // e.printStackTrace();
         }
 
         // Checking input is read properly
         System.out.println("Read:");
         System.out.println("Number of States: " + numStates);
-        System.out.println("Number of Alphabet Elements: " + numAlphabet);
+        System.out.println("Final State: " + finalState);
+        System.out.println("Number of Alphabet Elements (At Most) : " + numAlphabet);
 
-        System.out.println("Transitions:");
-        int index = 1;
-        for (String[] transition: transitions) {
-            StringBuilder output = new StringBuilder();
+        System.out.println("There should be " + ((numStates - 1) * (numAlphabet + 1)) + " transitions.");
+        for (int i = 0; i < numStates - 1; i++) {
 
-            output.append("[");
-            for (int i = 0; i < transition.length; i++) {
-                output.append(transition[i]);
-            }
-            output.append("]");
+            for (int j = 0; j < numAlphabet + 1; j++) {
+                String[] transition = transitions.remove();
+                // System.out.println("J is " + j);
+                StringBuilder output = new StringBuilder();
+                
+                output = new StringBuilder();
+                output.append("Transition for State: " + i + ", and on Character: " + j + " ");
+
+                output.append("[");
+                output.append(transition[0] + ", ");
+                output.append(transition[1] + ", ");
+                output.append(transition[2] + "]");
             
-            System.out.println(index++ + ": " + output.toString());
+                System.out.println(output.toString());
+            }
         }
 
-        System.out.println("Input String:" + inputString);
+        System.out.println("Input String: " + inputString);
+
+
+
+        // Time to run all the stuff now
+
+
+
+
+
+
+
+
     }
 
     /**
