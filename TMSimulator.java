@@ -87,44 +87,49 @@ public class TMSimulator {
         }
 
         // Checking input is read properly
-        System.out.println("Read:");
-        System.out.println("Number of States: " + numStates);
-        System.out.println("Final State: " + finalState);
-        System.out.println("Number of Alphabet Elements (At Most) : " + numAlphabet);
+        // System.out.println("Read:");
+        // System.out.println("Number of States: " + numStates);
+        // System.out.println("Final State: " + finalState);
+        // System.out.println("Number of Alphabet Elements (At Most) : " + numAlphabet);
 
-        System.out.println("There should be " + ((numStates - 1) * (numAlphabet + 1)) + " transitions.");
+        // System.out.println("There should be " + ((numStates - 1) * (numAlphabet + 1)) + " transitions.");
+
+        // Creating the TM
+
+        TM turingMachine;
+
+        if (inputString == "") { // Empty input
+            turingMachine = new TM(numStates, numAlphabet);
+        } else {
+            turingMachine = new TM(inputString, numStates, numAlphabet);
+        }
+
         for (int i = 0; i < numStates - 1; i++) {
 
             for (int j = 0; j < numAlphabet + 1; j++) {
-                String[] transition = transitions.remove();
-                // System.out.println("J is " + j);
-                StringBuilder output = new StringBuilder();
-                
-                output = new StringBuilder();
-                output.append("Transition for State: " + i + ", and on Character: " + j + " ");
+                 String[] transition = transitions.remove();
+                turingMachine.addTransition(transition, i, j);
 
-                output.append("[");
-                output.append(transition[0] + ", ");
-                output.append(transition[1] + ", ");
-                output.append(transition[2] + "]");
+                // System.out.println("J is " + j);
+                // StringBuilder output = new StringBuilder();
+                
+                // output = new StringBuilder();
+                // output.append("Transition for State: " + i + ", and on Character: " + j + " ");
+
+
+                // output.append("[");
+                // output.append(transition[0] + ", ");
+                // output.append(transition[1] + ", ");
+                // output.append(transition[2] + "]");
             
-                System.out.println(output.toString());
+                //System.out.println(output.toString());
             }
         }
 
-        System.out.println("Input String: " + inputString);
+        // System.out.println("Input String: " + inputString);
 
-
-
-        // Time to run all the stuff now
-
-
-
-
-
-
-
-
+        // Verifying the input is correct
+        System.out.println(turingMachine.toString());
     }
 
     /**
