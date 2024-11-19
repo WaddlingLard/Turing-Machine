@@ -26,4 +26,8 @@ public class TMState {
         return this.transitions.put(nextState, direction);
     }
 
+    public String getTransition (int symbol){
+        return this.transitions.get(symbol);
+    }
+
 }

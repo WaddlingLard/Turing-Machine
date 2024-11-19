@@ -10,13 +10,12 @@ public class TM {
     // number of states and symbols for validation
     private int numStates;
     private int numSymbols; 
-    private Map<String, String> transitions;
+
 
     public TM(int numStates, int numSymbols) {
         this.tape = new LinkedList<>();
         this.head =0;
         this.state =0;
-        this.transitions = new HashMap<>();
         this.numStates = numStates;
         this.numSymbols = numSymbols;
         
