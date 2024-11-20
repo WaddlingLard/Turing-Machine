@@ -68,12 +68,6 @@ public class TM {
         return Sigma.contains(letter);
     }
 
-    // Unsure if needed
-    public boolean setInitialState() {
-        
-        return false;
-    }
-
     public boolean addTransition(String[] transition, int stateIndex, int charIndex) {
 
         // Ex: numStates 2 (0, 1, 2), but you cannot have transitions on State 2
