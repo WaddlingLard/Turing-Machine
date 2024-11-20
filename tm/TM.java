@@ -16,6 +16,8 @@ public class TM {
     private HashSet<TMState> Q;
     private HashSet<Integer> Sigma;
     private TMState q0;
+    private TMState[] states;
+
 
     public TM(int numStates, int numSymbols) {
         this.tape = new LinkedList<>();
@@ -111,28 +113,93 @@ public class TM {
     public boolean isHalted(){
         return state == numStates;
     }
+    
+ 
+    public void execute() {
+        if (tape.isEmpty()) {
+            return;
+        }
+    
+        while (state != numStates - 1) {
+            // Get current symbol
+            Integer value = tape.get(head);
+            char currentSymbol = value.toString().charAt(0);
+            int symbolIndex;
+            
+            // Convert symbol to index
+            if (currentSymbol == '_') {
+                symbolIndex = numSymbols;
+            } else {
+                symbolIndex = Character.getNumericValue(currentSymbol);
+            }
+    
+            // Get transition
+            String[] transition = states[state].getTransition(symbolIndex);
+            if (transition == null) {
+                System.out.println("No transition found. Machine halted.");
+                return;
+            }
+    
+            // Apply transition
+            state = Integer.parseInt(transition[0]);
+            tape.set(head, Integer.valueOf(transition[1]));
+    
+            // Handle head movement
+            if (transition[2].equals("R")) {
+                head++;
+                if (head == tape.size()) {
+                    tape.add(Integer.valueOf(numSymbols));
+                }
+            } else if (transition[2].equals("L")) {
+                head--;
+                if (head < 0) {
+                    tape.addFirst(Integer.valueOf(numSymbols));
+                    head = 0;
+                }
+            }
+        }
+    }
    
     public String toString() {
 
         StringBuilder build = new StringBuilder();
 
-        int stateIndex = 0;
-        for (TMState state: Q) {
-            build.append("State " + stateIndex++ + ":\n");
-            build.append(state.toString());
+        //get final output string 
+        StringBuilder output = new StringBuilder(); 
+        int sum =0;
+
+        for (Integer value : tape) {
+            if (value != numSymbols) {
+                output.append(value);
+                sum += value;
+            }
         }
 
-        build.append("\nSigma: {");
-        for (int num: Sigma) {
-            build.append(num + ", ");
-        }
-        build.append("}\n");
-        build.append("Current tape: " + tape.toString());
-
-        build.append("\nInitial State:\n");
-        build.append(this.q0.toString());
+        //add output statistcs
+        build.append("Output: " + output.toString()).append("\n");
+        build.append("output length: ").append(output.length()).append("\n");
+        build.append("sum of symbols: ").append(sum);
 
         return build.toString();
+   
+
+        // int stateIndex = 0;
+        // for (TMState state: Q) {
+        //     build.append("State " + stateIndex++ + ":\n");
+        //     build.append(state.toString());
+        // }
+
+        // build.append("\nSigma: {");
+        // for (int num: Sigma) {
+        //     build.append(num + ", ");
+        // }
+        // build.append("}\n");
+        // build.append("Current tape: " + tape.toString());
+
+        // build.append("\nInitial State:\n");
+        // build.append(this.q0.toString());
+
+        // return build.toString();
     }
 
 }
