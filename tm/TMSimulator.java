@@ -132,6 +132,7 @@ public class TMSimulator {
 
         // Verifying the input is correct
         turingMachine.execute();
+        System.out.println("Finished execution!");
         System.out.println(turingMachine.toString());
     }
 
