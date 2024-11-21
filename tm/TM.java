@@ -12,12 +12,12 @@ public class TM {
 
     // number of states and symbols for validation
     private int numStates;
-    private int numSymbols; 
+    // private int numSymbols; 
 
     private TMState[] Q;
     private Integer[] Sigma;
 
-    private TMState q0;
+    // private TMState q0;
 
     public TM(int numStates, int numSymbols) {
         this.tape = new ArrayList<Integer>();
@@ -36,8 +36,8 @@ public class TM {
         this.state = 0;
            
         this.numStates = numStates;
-        this.numSymbols = numSymbols;
-        this.q0 = Q[0];
+        // this.numSymbols = numSymbols;
+        // this.q0 = Q[0];
     }
     
     // constructor for Turing machine with input string 
@@ -102,43 +102,26 @@ public class TM {
     public void execute() {
 
         Integer value;
-        boolean emptyTile = false;
-        String currentSymbol;
-        int symbolIndex;
 
         // If the head is on an empty tile
         if (tape.size() <= head) {
+            tape.add(0);
             value = 0;
-            currentSymbol = "_";
-            emptyTile = true;
         } else {
             value = tape.get(head);
-            currentSymbol = value + "";
         }
-    
+
         // Only continues to execute while the state is not in the final state
         while (state != numStates - 1) {
-
-            // Convert symbol to index
-            if (currentSymbol == "_") {
-                symbolIndex = 0;
-            } else {
-                symbolIndex = value;
-            }
     
             // Get transition
-            int[] transition = Q[state].getTransition(symbolIndex);
+            int[] transition = Q[state].getTransition(value);
     
             // Apply transition
             state = transition[0];
-            if (emptyTile) {
-                emptyTile = false;
-                tape.add(head, transition[1]);
-            } else {
-                tape.set(head, transition[1]);
-            }
+            tape.set(head, transition[1]);
 
-
+            // Move tape header
             if (transition[2] == 0) {
                 head++;
                 if (head == tape.size()) {
@@ -152,8 +135,8 @@ public class TM {
                 }
             }
 
+            // Maintain value
             value = tape.get(head);
-            currentSymbol = value + "";
         }
     }
    
