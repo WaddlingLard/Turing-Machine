@@ -1,11 +1,15 @@
 package tm;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 
 public class TM {
 
-    private LinkedList<Integer> tape;
+    // private LinkedList<Integer> tape;
+    private ArrayList<Integer> tape;
+
+    // private Map<Integer, Integer> test;
 
     
     private int head; //head's current position 
@@ -27,7 +31,8 @@ public class TM {
 
 
     public TM(int numStates, int numSymbols) {
-        this.tape = new LinkedList<>();
+        // this.tape = new LinkedList<>();
+        this.tape = new ArrayList<Integer>();
 
         // this.Q = new HashSet<>();
         // this.Sigma = new HashSet<>();
@@ -87,7 +92,7 @@ public class TM {
         // return Sigma.contains(letter);
     }
 
-    public boolean addTransition(String[] transition, int stateIndex, int charIndex) {
+    public boolean addTransition(int[] transition, int stateIndex, int charIndex) {
 
         // Ex: numStates 2 (0, 1, 2), but you cannot have transitions on State 2
         // if (stateIndex > numStates - 1 || !inSigma(charIndex)) {
@@ -118,57 +123,56 @@ public class TM {
             index++;
         }
         return null;
-    }
-
-    public boolean isHalted(){
-        return state == numStates;
-    }
-    
+    }  
  
     public void execute() {
 
-        // Uncertain about this line
+        Integer value;
+        boolean emptyTile = false;
+        String currentSymbol;
+        int symbolIndex;
 
-        // if (tape.isEmpty()) { 
-        //     return;
-        // }
-
-
-        // if (tape.size() <= head) {
-            
-        // }
+        // If the head is on an empty tile
+        if (tape.size() <= head) {
+            value = 0;
+            currentSymbol = "_";
+            emptyTile = true;
+        } else {
+            value = tape.get(head);
+            currentSymbol = value + "";
+        }
     
         // Only continues to execute while the state is not in the final state
         while (state != numStates - 1) {
-            // Get current symbol
 
-            Integer value;
-            boolean emptyTile;
-            String currentSymbol;
-
-            // If the head is on an empty tile
-            if (tape.size() <= head || head < 0) {
-                value = 0;
-                emptyTile = true;
-                currentSymbol = "_";
-            } else {
-                value = tape.get(head);
-                emptyTile = false;
-                currentSymbol = value + "";
-            }
-
-            int symbolIndex;
-            
             // Convert symbol to index
+
+            // if (tape.size() <= head) {
+            //     value = 0;
+            //     currentSymbol = "_";
+            // } else {
+            //     value = tape.get(head);
+            //     currentSymbol = value + "";
+            // }
+
+            // switch (currentSymbol) {
+            //     case ("_"):
+            //         // System.out.println("On empty!");
+            //         emptyTile = true;
+            //         symbolIndex = 0;
+            //         break;
+            //     default:
+            //         symbolIndex = value;
+            // }
+
             if (currentSymbol == "_") {
-                // symbolIndex = numSymbols;
                 symbolIndex = 0;
             } else {
                 symbolIndex = value;
             }
     
             // Get transition
-            String[] transition = Q[state].getTransition(symbolIndex);
+            int[] transition = Q[state].getTransition(symbolIndex);
             
             // I believe this is obsolete
             // if (transition == null) {
@@ -177,28 +181,64 @@ public class TM {
             // }
     
             // Apply transition
-            state = Integer.parseInt(transition[0]);
+            state = transition[0];
             if (emptyTile) {
-                tape.add(head, Integer.valueOf(transition[1]));
+                emptyTile = false;
+                tape.add(head, transition[1]);
             } else {
-                tape.set(head, Integer.valueOf(transition[1]));
+                tape.set(head, transition[1]);
             }
     
-            // Handle head movement
-            if (transition[2].equals("R")) {
+            // switch(transition[2]){
+            //     case "R":
+            //         // System.out.println("Right");
+            //         head++;
+            //         if (head == tape.size()) {
+            //             tape.add(0);
+            //         }
+            //         break;
+            //     case "L":
+            //         // System.out.println("Left");
+            //         head--;
+            //         if(head < 0) {
+            //             tape.addFirst(0);
+            //             head = 0;
+            //         }
+            //         break;
+            //     default:
+            //         System.out.println("This shouldn't happen. Turing is disappointed.");
+            // }
+
+            if (transition[2] == 0) {
                 head++;
                 if (head == tape.size()) {
-                    // tape.add(Integer.valueOf(numSymbols));
                     tape.add(0);
                 }
-            } else if (transition[2].equals("L")) {
+            } else {
                 head--;
                 if (head < 0) {
-                    // tape.addFirst(Integer.valueOf(numSymbols));
-                    tape.addFirst(0);
+                    // tape.addFirst(0);
+                    tape.add(0, 0);
                     head = 0;
                 }
             }
+
+            // Handle head movement
+            // if (transition[2].equals("R")) {
+            //     head++;
+            //     if (head == tape.size()) {
+            //         tape.add(0);
+            //     }
+            // } else if (transition[2].equals("L")) {
+            //     head--;
+            //     if (head < 0) {
+            //         tape.addFirst(0);
+            //         head = 0;
+            //     }
+            // }
+
+            value = tape.get(head);
+            currentSymbol = value + "";
         }
     }
    
@@ -208,7 +248,7 @@ public class TM {
 
         //get final output string 
         StringBuilder output = new StringBuilder(); 
-        int sum =0;
+        int sum = 0;
 
         if (tape.size() > 1000) {
             output.append("very large");
@@ -248,7 +288,8 @@ public class TM {
 
         //add output statistics
         build.append("Output: " + output.toString()).append("\n");
-        build.append("output length: ").append(output.length()).append("\n");
+        // build.append("output length: ").append(output.length()).append("\n");
+        build.append("output length: ").append(tape.size()).append("\n");
         build.append("sum of symbols: ").append(sum);
 
         return build.toString();

@@ -18,7 +18,7 @@ public class TMSimulator {
 
         int numStates = -1, numAlphabet = -1, finalState = -1;
         // ArrayList<String[]> transitions = new ArrayList<String[]>();
-        Queue<String[]> transitions = new LinkedList<String[]>();
+        Queue<int[]> transitions = new LinkedList<int[]>();
         String inputString = "";
         
         if (args.length != 1) {
@@ -51,7 +51,7 @@ public class TMSimulator {
 
             Scanner scan = new Scanner(inputFile);
             String readLine = "";
-            String[] transitionTemplate; 
+            int[] transitionTemplate; 
             
             // Number of states
            numStates = scan.nextInt();
@@ -109,7 +109,7 @@ public class TMSimulator {
         for (int i = 0; i < numStates - 1; i++) {
 
             for (int j = 0; j < numAlphabet + 1; j++) {
-                 String[] transition = transitions.remove();
+                int[] transition = transitions.remove();
                 turingMachine.addTransition(transition, i, j);
 
                 // System.out.println("J is " + j);
@@ -128,6 +128,8 @@ public class TMSimulator {
             }
         }
 
+        System.out.println("TM Created!");
+
         // System.out.println("Input String: " + inputString);
 
         // Verifying the input is correct
@@ -141,15 +143,24 @@ public class TMSimulator {
      * @param transition which carries the elements (Next_State, Write_Symbol, Move[L, R])
      * @return The transition in a String[].
      */
-    public static String[] readTransition(String transition) {
+    public static int[] readTransition(String transition) {
         
-        String[] transitionTemplate = new String[3]; 
+        int[] transitionTemplate = new int[3]; 
 
         Scanner transitionReader = new Scanner(transition);
         transitionReader.useDelimiter(",");
 
         for (int i = 0; i < transitionTemplate.length; i++) {
-            transitionTemplate[i] = transitionReader.next();
+            if (i == 2) {
+                String direction = transitionReader.next();
+                if (direction.equals("R")) {
+                    transitionTemplate[i] = 0; // 0 == Go Right
+                } else {
+                    transitionTemplate[i] = 1; // 1 == Go Left
+                }
+            } else {
+                transitionTemplate[i] = Integer.parseInt(transitionReader.next());
+            }
         }
         transitionReader.close();
 
