@@ -2,6 +2,11 @@ package tm;
 
 import java.util.ArrayList;
 
+/**
+ * A class that represents a Turing Machine.
+ * @author Brian Wu
+ * @author Max Ma
+ */
 public class TM {
 
     private ArrayList<Integer> tape;
@@ -15,6 +20,11 @@ public class TM {
     private TMState[] Q;
     private Integer[] Sigma;
 
+    /**
+     * The default constructor for a TM. It requires 2 values in order to know the transition structure with a given test file
+     * @param numStates The number of states a TM will have (final state will have no transitions)
+     * @param numSymbols The number of characters in the alphabet (0 is not included)
+     */
     public TM(int numStates, int numSymbols) {
         this.tape = new ArrayList<Integer>();
         this.Q = new TMState[numStates];
@@ -34,7 +44,12 @@ public class TM {
         this.numStates = numStates;
     }
     
-    // constructor for Turing machine with input string 
+    /**
+     * Overloaded constructor that takes in a string as the starting input for the TM tape
+     * @param input Starting string for the tape
+     * @param numStates The number of states a TM will have (final state will have no transitions)
+     * @param numSymbols The number of characters in the alphabet (0 is not included)
+     */
     public TM(String input, int numStates, int numSymbols) {
         this(numStates, numSymbols);
 
@@ -44,12 +59,21 @@ public class TM {
         }
     }
 
+    /**
+     * Adds a new state to the TM
+     * @param element int value that is assigned to the TMState
+     * @return The TM state that was added
+     */
     public TMState addState(int element) {
         TMState newState = new TMState(element);
         this.Q[element] = newState;
         return newState;
     }
 
+    /**
+     * Adds a new character to the TM
+     * @param letter int value that represents the character for an alphabet
+     */
     public void addSigma(int letter) {
         if (letter == 0) {
             return;
@@ -57,6 +81,13 @@ public class TM {
         this.Sigma[letter] = letter;
     }
 
+    /**
+     * Adds a transition on a provided TMState
+     * @param transition Transition information containing the (next_state, write_element, direction)
+     * @param stateIndex Index of the given state
+     * @param charIndex Index of the given input character from the alphabet
+     * @return boolean, but now that I think about it there is not much boolean checking going on here, disregard this
+     */
     public boolean addTransition(int[] transition, int stateIndex, int charIndex) {
 
         TMState fromState = Q[stateIndex];
@@ -65,6 +96,10 @@ public class TM {
         return true;
     }
  
+    /**
+     * The bulk of the TM's work is here. This method executes the TM while keeping in mind the transitions from one state to
+     * another and maintaining concurrency with the tape and halts when it reaches the accept state.
+     */
     public void execute() {
 
         Integer value;
@@ -106,6 +141,11 @@ public class TM {
         }
     }
    
+    /**
+     * Returns the output of the tapes current state. This method is ideally used after calling execute() as the TM is allowed to process
+     * through the given data and arrive to a new, modified tape.
+     * @return String containing the tape status, its length, and the sum of all elements.
+     */
     public String toString() {
 
         StringBuilder build = new StringBuilder();
@@ -114,30 +154,10 @@ public class TM {
         StringBuilder output = new StringBuilder(); 
         int sum = 0;
 
-        // if (tape.size() > 1000) {
-        //     output.append("very large");
-        //     for (Integer value : tape) {
-        //         sum += value;
-        //     }
-        // } else {
-        //     for (Integer value : tape) {
-        //         output.append(value);
-        //         sum += value;
-        //     }
-        // }
-
-        // Iterator method (kinda ehh)
-        // Iterator<Integer> iterator = tape.iterator();
-        // while (iterator.hasNext()) {
-        //     Integer value = iterator.next();
-        //     output.append(value);
-        //     sum += value;
-        // }
-
         for (int i = 0; i < tape.size(); i++) {
-            // int value = tape.get(i);
-            output.append(tape.get(i));
-            sum += tape.get(i);
+            int value = tape.get(i);
+            output.append(value);
+            sum += value;
         }
 
         //add output statistics

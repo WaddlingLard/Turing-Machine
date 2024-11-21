@@ -8,9 +8,13 @@ import java.util.Queue;
 import java.util.Scanner;
 
 /**
+ * Class that creates a Turing Machine and executes it. Follows a certain form in test files to grab data like the number of states,
+ * elements in the alphabet, transitions, and if there is an input string.
  * 
- * @author
- * @author
+ * NOTE: Test files must be added to the /Test folder before calling TMSimulator. That is how this program is setup.
+ * 
+ * @author Brian Wu
+ * @author Max Ma
  */
 public class TMSimulator {
     
@@ -19,8 +23,7 @@ public class TMSimulator {
         // Getting the starting time
         long begin = System.currentTimeMillis();
 
-        int numStates = -1, numAlphabet = -1, finalState = -1;
-        // ArrayList<String[]> transitions = new ArrayList<String[]>();
+        int numStates = 0, numAlphabet = 0;
         Queue<int[]> transitions = new LinkedList<int[]>();
         String inputString = "";
         
@@ -30,10 +33,9 @@ public class TMSimulator {
         }
 
         // Grabbing the file
-        // VV This one is for normal operation
+        // Note, test files must be in the /Test dir
         String filename = "./Test/" + args[0];
 
-        // String filename = "./Test/file0.txt";
         File inputFile = new File(filename);
 
         if (!inputFile.exists()) {
@@ -58,7 +60,6 @@ public class TMSimulator {
             
             // Number of states
            numStates = scan.nextInt();
-           finalState = numStates - 1;
            numAlphabet = scan.nextInt();
 
             // Grabbing Transitions
@@ -91,16 +92,6 @@ public class TMSimulator {
             // e.printStackTrace();
         }
 
-        // Checking input is read properly
-        // System.out.println("Read:");
-        // System.out.println("Number of States: " + numStates);
-        // System.out.println("Final State: " + finalState);
-        // System.out.println("Number of Alphabet Elements (At Most) : " + numAlphabet);
-
-        // System.out.println("There should be " + ((numStates - 1) * (numAlphabet + 1)) + " transitions.");
-
-        // Creating the tm.TM
-
         TM turingMachine;
 
         if (inputString == "") { // Empty input
@@ -114,45 +105,20 @@ public class TMSimulator {
             for (int j = 0; j < numAlphabet + 1; j++) {
                 int[] transition = transitions.remove();
                 turingMachine.addTransition(transition, i, j);
-
-                // System.out.println("J is " + j);
-                // StringBuilder output = new StringBuilder();
-                
-                // output = new StringBuilder();
-                // output.append("Transition for State: " + i + ", and on Character: " + j + " ");
-
-
-                // output.append("[");
-                // output.append(transition[0] + ", ");
-                // output.append(transition[1] + ", ");
-                // output.append(transition[2] + "]");
-            
-                //System.out.println(output.toString());
             }
         }
 
-        // System.out.println("TM Created!");
-
-        // System.out.println("Input String: " + inputString);
-
-        // long before = System.currentTimeMillis();
-        // long beforeDuration = before - begin;
-        // System.out.println("Before execution time (S:M): " + (beforeDuration / 1000) + ":" + (beforeDuration % 1000));
-
         turingMachine.execute();
-        // System.out.println("Finished execution!");
         System.out.println(turingMachine.toString());
 
         long end = System.currentTimeMillis();
-        // long operationDuration = end - before;
         long totalDuration = end - begin;
 	    String milliseconds = String.format("%03d", totalDuration % 1000);
-        // System.out.println("Time to run operation (S:M): " + (operationDuration / 1000) + ":" + (operationDuration % 1000));
         System.out.println("Total Time to run operation (S:M): " + (totalDuration / 1000)  + ":" + milliseconds);
     }
 
     /**
-     * This method parses through the given line which is a transition segmented by commas.
+     * Parses through the given string which is a transition segmented by commas.
      * @param transition which carries the elements (Next_State, Write_Symbol, Move[L, R])
      * @return The transition in a String[].
      */
@@ -164,6 +130,7 @@ public class TMSimulator {
         transitionReader.useDelimiter(",");
 
         for (int i = 0; i < transitionTemplate.length; i++) {
+            // Opting for numbers to reduce conversion inside TM
             if (i == 2) {
                 String direction = transitionReader.next();
                 if (direction.equals("R")) {
