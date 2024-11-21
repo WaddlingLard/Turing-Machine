@@ -5,19 +5,15 @@ import java.util.ArrayList;
 public class TM {
 
     private ArrayList<Integer> tape;
-    // private Map<Integer, Integer> test;
     
     private int head; //head's current position 
     private int state; // current state
 
     // number of states and symbols for validation
     private int numStates;
-    // private int numSymbols; 
 
     private TMState[] Q;
     private Integer[] Sigma;
-
-    // private TMState q0;
 
     public TM(int numStates, int numSymbols) {
         this.tape = new ArrayList<Integer>();
@@ -36,8 +32,6 @@ public class TM {
         this.state = 0;
            
         this.numStates = numStates;
-        // this.numSymbols = numSymbols;
-        // this.q0 = Q[0];
     }
     
     // constructor for Turing machine with input string 
@@ -63,41 +57,13 @@ public class TM {
         this.Sigma[letter] = letter;
     }
 
-    // Don't believe this needs to exist
-    public boolean inSigma(int letter) {
-        if (letter == 0) { // 0 is not supposed to be in sigma, but is treated as an element
-            return true;
-        }
-
-        return letter >= 0 && letter <= this.Sigma.length;
-    }
-
     public boolean addTransition(int[] transition, int stateIndex, int charIndex) {
 
-        if (stateIndex > numStates - 1) {
-            System.out.println("Cannot apply transition");
-            return false;
-        }
-
-        // TMState fromState = getState(stateIndex);
         TMState fromState = Q[stateIndex];
         fromState.addTransition(charIndex, transition);
         
         return true;
     }
-
-    // Obsolete method, since states are indexed you can directly accessed them
-    public TMState getState(int stateIndex) {
-
-        int index = 0;
-        for(TMState state: Q){
-            if(index == stateIndex){
-                return state;
-            }
-            index++;
-        }
-        return null;
-    }  
  
     public void execute() {
 
