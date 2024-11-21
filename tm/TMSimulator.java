@@ -21,7 +21,7 @@ public class TMSimulator {
     public static void main(String[] args) {
 
         // Getting the starting time
-        long begin = System.currentTimeMillis();
+        // long begin = System.currentTimeMillis();
 
         int numStates = 0, numAlphabet = 0;
         Queue<int[]> transitions = new LinkedList<int[]>();
@@ -111,10 +111,10 @@ public class TMSimulator {
         turingMachine.execute();
         System.out.println(turingMachine.toString());
 
-        long end = System.currentTimeMillis();
-        long totalDuration = end - begin;
-	    String milliseconds = String.format("%03d", totalDuration % 1000);
-        System.out.println("Total Time to run operation (S:M): " + (totalDuration / 1000)  + ":" + milliseconds);
+        // long end = System.currentTimeMillis();
+        // long totalDuration = end - begin;
+	    // String milliseconds = String.format("%03d", totalDuration % 1000);
+        // System.out.println("Total Time to run operation (S:M): " + (totalDuration / 1000)  + ":" + milliseconds);
     }
 
     /**
