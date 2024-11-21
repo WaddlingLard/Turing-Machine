@@ -1,18 +1,14 @@
 package tm;
 
 import java.util.ArrayList;
-// import java.util.HashMap;
-// import java.util.Map;
 
 public class TMState {
     
     private int element;
 
-    // private Map<Integer, int[]> transitions;
     private ArrayList<int[]> transitions;
 
     public TMState() {
-        // this.transitions = new HashMap<>();
         this.transitions = new ArrayList<int[]>();
     }
 
@@ -26,7 +22,6 @@ public class TMState {
     }
 
     public void addTransition(int nextState, int[] direction) {
-        // return this.transitions.put(nextState, direction);
         this.transitions.add(nextState, direction);
     }
 

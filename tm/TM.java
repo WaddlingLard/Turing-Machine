@@ -114,16 +114,30 @@ public class TM {
         StringBuilder output = new StringBuilder(); 
         int sum = 0;
 
-        if (tape.size() > 1000) {
-            output.append("very large");
-            for (Integer value : tape) {
-                sum += value;
-            }
-        } else {
-            for (Integer value : tape) {
-                output.append(value);
-                sum += value;
-            }
+        // if (tape.size() > 1000) {
+        //     output.append("very large");
+        //     for (Integer value : tape) {
+        //         sum += value;
+        //     }
+        // } else {
+        //     for (Integer value : tape) {
+        //         output.append(value);
+        //         sum += value;
+        //     }
+        // }
+
+        // Iterator method (kinda ehh)
+        // Iterator<Integer> iterator = tape.iterator();
+        // while (iterator.hasNext()) {
+        //     Integer value = iterator.next();
+        //     output.append(value);
+        //     sum += value;
+        // }
+
+        for (int i = 0; i < tape.size(); i++) {
+            // int value = tape.get(i);
+            output.append(tape.get(i));
+            sum += tape.get(i);
         }
 
         //add output statistics
