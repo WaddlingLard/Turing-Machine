@@ -17,15 +17,15 @@ This Java application implements a Turing Machine simulator that can process inp
 
 - What concepts still aren't quite clear?
 
-Understanding which part of code that require modification to speed up futher for the program. There are many things that can be tuned to achieve a faster speed, like even the small things. These can be like using a .equals() over a '==' and type conversion that slowly accumlates milliseconds. There were several instances where we had to adjust the code to reduce comparisons and conversions to optimize speed. The program could have more to optimize but it feels like it is nearing peak speeds.
+  Understanding which part of code that require modification to speed up futher for the program. There are many things that can be tuned to achieve a faster speed, like even the small things. These can be like using a .equals() over a '==' and type conversion that slowly accumlates milliseconds. There were several instances where we had to adjust the code to reduce comparisons and conversions to optimize speed. The program could have more to optimize but it feels like it is nearing peak speeds.
   
 - What techniques did you use to make your code easy to debug and modify?
 
-Making tracing output string in toString to check if TMSimulator is tracing correctly from each test file that outputting correct specification from the .txt already exist. We also created an output string in the TMState.java class to see the transitions are properly instantiated. 
+  Making tracing output string in toString to check if TMSimulator is tracing correctly from each test file that outputting correct specification from the .txt already exist. We also created an output string in the TMState.java class to see the transitions are properly instantiated. 
   
 - What would you change about your design process?
 
-One of ways that's helping the program speed up running is to incorperate arrayList to track starting start and sigma since we can index those directly. One alteration could be understanding the different pros and cons of DS to see what is the best choice for the tape.
+  One of ways that's helping the program speed up running is to incorperate arrayList to track starting start and sigma since we can index those directly. One alteration could be understanding the different pros and cons of DS to see what is the best choice for the tape.
 
 - If you could go back in time, what would you tell yourself about doing this project?
 
