@@ -1,6 +1,5 @@
 package tm;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +7,6 @@ public class TMState {
     
     private int element;
 
-    // Could use tm.TMState to be stored in HashMap instead
     private Map<Integer, int[]> transitions;
 
     public TMState() {
@@ -39,7 +37,6 @@ public class TMState {
 
             int[] transition = getTransition(i);
             build.append("[" + transition[0] + ", " + transition[1] + ", " + transition[2] + "]\n");
-//            System.out.println("looking for transition on " + i);
         }
         return build.toString();
     }

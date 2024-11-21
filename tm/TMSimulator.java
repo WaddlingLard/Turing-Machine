@@ -42,7 +42,7 @@ public class TMSimulator {
             System.out.println("Argument provided is not a file.");
             return;
         } else {
-            System.out.println("Reading file success!"); // Used for troubleshooting
+            // System.out.println("Reading file success!"); // Used for troubleshooting
         }
 
         // Reading file
@@ -128,13 +128,13 @@ public class TMSimulator {
             }
         }
 
-        System.out.println("TM Created!");
+        // System.out.println("TM Created!");
 
         // System.out.println("Input String: " + inputString);
 
         // Verifying the input is correct
         turingMachine.execute();
-        System.out.println("Finished execution!");
+        // System.out.println("Finished execution!");
         System.out.println(turingMachine.toString());
     }
 
